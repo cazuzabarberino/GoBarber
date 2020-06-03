@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useRef, useContext } from "react";
 import logoImg from "../../assets/logo.svg";
 import { Container, Content, Bakcground } from "./styles";
 import { FiLogIn, FiMail, FiLock } from "react-icons/fi";
@@ -8,9 +8,12 @@ import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import getValidationErrors from "../../utils/getValidationErrors";
+import AuthContext from "../../context/AuthContext";
 
 export default () => {
   const formRef = useRef<FormHandles>(null);
+
+  const { name } = useContext(AuthContext);
 
   const handleSubmit = useCallback(async (data: object) => {
     try {
