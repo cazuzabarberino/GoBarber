@@ -8,14 +8,19 @@ import { FormHandles } from "@unform/core";
 import { Form } from "@unform/web";
 import * as Yup from "yup";
 import getValidationErrors from "../../utils/getValidationErrors";
-import AuthContext from "../../context/AuthContext";
+import { AuthContext } from "../../context/AuthContext";
+
+interface SignInFormData {
+  email: string;
+  password: string;
+}
 
 export default () => {
   const formRef = useRef<FormHandles>(null);
 
-  const { name } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
 
-  const handleSubmit = useCallback(async (data: object) => {
+  const handleSubmit = useCallback(async (data: SignInFormData) => {
     try {
       formRef.current?.setErrors({});
 
@@ -28,6 +33,11 @@ export default () => {
 
       await schema.validate(data, {
         abortEarly: false,
+      });
+
+      signIn({
+        email: data.email,
+        password: data.password,
       });
     } catch (err) {
       const errors = getValidationErrors(err);
