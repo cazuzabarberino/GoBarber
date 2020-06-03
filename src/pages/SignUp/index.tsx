@@ -1,18 +1,20 @@
 import React from "react";
 import logoImg from "../../assets/logo.svg";
 import { Container, Content, Bakcground } from "./styles";
-import { FiLogIn, FiMail, FiLock } from "react-icons/fi";
+import { FiArrowLeft, FiMail, FiLock, FiUser } from "react-icons/fi";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
 
 export default () => {
   return (
     <Container>
+      <Bakcground />
       <Content>
         <img src={logoImg} alt="GoBarber" />
 
         <form>
-          <h1>Faça seu Logon</h1>
+          <h1>Faça seu Cadastro</h1>
+          <Input icon={FiUser} name="name" placeholder="Name" />
           <Input icon={FiMail} name="email" placeholder="E-mail" />
           <Input
             icon={FiLock}
@@ -20,16 +22,13 @@ export default () => {
             type="password"
             placeholder="Senha"
           />
-          <Button type="submit">Entrar</Button>
-
-          <a href="forgot">Esqueci minha senha</a>
+          <Button type="submit">Cadastrar</Button>
         </form>
         <a href="">
-          <FiLogIn />
-          Criar conta
+          <FiArrowLeft />
+          Voltar para logon
         </a>
       </Content>
-      <Bakcground />
     </Container>
   );
 };
