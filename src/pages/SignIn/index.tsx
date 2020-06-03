@@ -6,7 +6,8 @@ import * as Yup from "yup";
 import logoImg from "../../assets/logo.svg";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import { useAuth } from "../../hooks/AuthContext";
+import { useAuth } from "../../hooks/Auth";
+import { useToast } from "../../hooks/Toast";
 import getValidationErrors from "../../utils/getValidationErrors";
 import { Bakcground, Container, Content } from "./styles";
 
@@ -19,6 +20,7 @@ export default () => {
   const formRef = useRef<FormHandles>(null);
 
   const { signIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SignInFormData) => {
@@ -36,7 +38,7 @@ export default () => {
           abortEarly: false,
         });
 
-        signIn({
+        await signIn({
           email: data.email,
           password: data.password,
         });
@@ -46,9 +48,11 @@ export default () => {
 
           formRef.current?.setErrors(errors);
         }
+
+        addToast();
       }
     },
-    [signIn]
+    [signIn, addToast]
   );
 
   return (
