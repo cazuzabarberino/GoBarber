@@ -45,6 +45,7 @@ export default ({ name, icon: Icon, ...rest }: InputProps) => {
         ref={inputRef}
         {...rest}
       />
+      {error}
     </Container>
   );
 };
