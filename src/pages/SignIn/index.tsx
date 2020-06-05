@@ -10,7 +10,7 @@ import { useAuth } from "../../hooks/Auth";
 import { useToast } from "../../hooks/Toast";
 import getValidationErrors from "../../utils/getValidationErrors";
 import { Bakcground, Container, AnimationContainer, Content } from "./styles";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 interface SignInFormData {
   email: string;
@@ -19,6 +19,8 @@ interface SignInFormData {
 
 export default () => {
   const formRef = useRef<FormHandles>(null);
+
+  const history = useHistory();
 
   const { signIn } = useAuth();
   const { addToast } = useToast();
@@ -43,6 +45,8 @@ export default () => {
           email: data.email,
           password: data.password,
         });
+
+        history.push("/dashboard");
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -59,7 +63,7 @@ export default () => {
         });
       }
     },
-    [signIn, addToast]
+    [signIn, addToast, history]
   );
 
   return (
